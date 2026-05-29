@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Note Summarizer — OrbitMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+      <!-- Header Container -->
+      <div id="header-container"></div>
+
+      <!-- Content Area -->
+      <main class="app-content">
+        
+        <div class="summarizer-layout">
+          
+          <!-- LEFT PANEL: Notes Input -->
+          <div class="summarizer-input-card">
+            <h3 style="font-size:1.2rem; display:flex; justify-content:space-between; align-items:center;">
+              ✍️ Paste Study Notes
+              <button class="btn btn-secondary" id="clear-notes-btn" style="width:auto; padding:0.4rem 0.8rem; font-size:0.8rem;">Clear Text</button>
+            </h3>
+            
+            <textarea id="notes-textarea" class="summarizer-textarea" placeholder="Paste your lecture transcripts, textbook chapters, or reading materials here (minimum 100 characters)..."></textarea>
+            
+            <div class="summarizer-actions-row">
+              <span class="char-counter" id="char-counter">0 characters</span>
+              <button class="btn btn-primary" id="summarize-btn" style="width:auto; padding:0.6rem 1.5rem;">
+                ⚡ Generate Summary
+              </button>
+            </div>
+
+            <!-- Saved Summaries Archive -->
+            <h4 style="font-size:0.95rem; margin-top:1rem; border-top:1px solid var(--border); padding-top:1rem;">📂 Note History</h4>
+            <div class="saved-summaries-list" id="saved-summaries-container">
+              <div style="text-align:center; color:var(--text-secondary); font-size:0.8rem; padding:1rem;">No saved summaries.</div>
+            </div>
+          </div>
+
+          <!-- RIGHT PANEL: AI Summary Output -->
+          <div class="summarizer-output-card" style="position:relative;">
+            <h3 style="font-size:1.2rem; display:flex; justify-content:space-between; align-items:center;">
+              ✨ AI Summary
+              <button class="btn btn-secondary" id="copy-summary-btn" style="width:auto; padding:0.4rem 0.8rem; font-size:0.8rem; display:none;">📋 Copy Text</button>
+            </h3>
+
+            <!-- Loading overlay -->
+            <div id="summarizer-loading-overlay" class="full-loading-overlay" style="display:none;">
+              <div style="text-align:center;">
+                <div class="spinner"></div>
+                <p style="margin-top:0.5rem; font-weight:500;">AI is reading and condensing notes...</p>
+              </div>
+            </div>
+
+            <!-- Output Container -->
+            <div class="summarizer-output-container" id="summary-output">
+              <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--text-secondary); text-align:center; padding:2rem;">
+                <span style="font-size:3rem; margin-bottom:1rem;">📝</span>
+                <h4>No Summary Generated Yet</h4>
+                <p style="font-size:0.85rem; margin-top:0.25rem;">Paste your notes in the left editor panel and click "Generate Summary" to analyze them.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/summarizer.js"></script>
+</body>
+</html>

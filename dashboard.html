@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — OrbitMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Container -->
+    <div class="app-container">
+      <!-- Navbar Header -->
+      <div id="header-container"></div>
+
+      <!-- Content Area -->
+      <main class="app-content">
+        <div class="dashboard-grid">
+          
+          <!-- Hero Dynamic Greeting & Motivation -->
+          <div class="dashboard-hero">
+            <div class="hero-text">
+              <h1 id="dynamic-greeting">Hello, Student!</h1>
+              <p>Welcome to your academic space. Let's make today productive.</p>
+            </div>
+            <div class="hero-quote" id="motivational-quote">
+              "The secret of getting ahead is getting started."
+            </div>
+          </div>
+
+          <!-- Left Column: Tasks, Deadlines, Summaries (Span 8) -->
+          <div class="span-8" style="display:flex; flex-direction:column; gap:1.5rem;">
+            
+            <!-- Today's Tasks -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>📋 Today's Tasks</h3>
+                <a href="tasks.html" style="font-size:0.85rem; color:var(--accent); text-decoration:none; font-weight:600;">View All</a>
+              </div>
+              <div class="dash-task-list" id="today-tasks-list">
+                <div style="text-align:center; padding:1.5rem; color:var(--text-secondary); font-size:0.9rem;">No tasks scheduled for today.</div>
+              </div>
+            </div>
+
+            <!-- Upcoming Deadlines -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>⏰ Upcoming Deadlines</h3>
+                <a href="tasks.html" style="font-size:0.85rem; color:var(--accent); text-decoration:none; font-weight:600;">Manage</a>
+              </div>
+              <div class="dash-task-list" id="upcoming-deadlines-list">
+                <div style="text-align:center; padding:1.5rem; color:var(--text-secondary); font-size:0.9rem;">No upcoming deadlines this week.</div>
+              </div>
+            </div>
+
+            <!-- Weekly Workload Overview -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>📊 Weekly Workload</h3>
+                <span id="total-hours-label" style="font-size:0.85rem; color:var(--text-secondary);">0 hrs scheduled</span>
+              </div>
+              <div class="workload-graph-container" id="workload-graph">
+                <!-- Javascript will render 7 bars here -->
+                <div class="graph-bar-wrapper"><div class="graph-bar-fill" style="height:0%;" data-hours="0"></div><div class="graph-day-label">Mon</div></div>
+                <div class="graph-bar-wrapper"><div class="graph-bar-fill" style="height:0%;" data-hours="0"></div><div class="graph-day-label">Tue</div></div>
+                <div class="graph-bar-wrapper"><div class="graph-bar-fill" style="height:0%;" data-hours="0"></div><div class="graph-day-label">Wed</div></div>
+                <div class="graph-bar-wrapper"><div class="graph-bar-fill" style="height:0%;" data-hours="0"></div><div class="graph-day-label">Thu</div></div>
+                <div class="graph-bar-wrapper"><div class="graph-bar-fill" style="height:0%;" data-hours="0"></div><div class="graph-day-label">Fri</div></div>
+                <div class="graph-bar-wrapper"><div class="graph-bar-fill" style="height:0%;" data-hours="0"></div><div class="graph-day-label">Sat</div></div>
+                <div class="graph-bar-wrapper"><div class="graph-bar-fill" style="height:0%;" data-hours="0"></div><div class="graph-day-label">Sun</div></div>
+              </div>
+            </div>
+
+            <!-- Recent Summaries -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>📝 Recent Summaries</h3>
+                <a href="summarizer.html" style="font-size:0.85rem; color:var(--accent); text-decoration:none; font-weight:600;">Go to Notes</a>
+              </div>
+              <div id="recent-summaries-list" style="display:flex; flex-direction:column; gap:0.75rem;">
+                <div style="text-align:center; padding:1.5rem; color:var(--text-secondary); font-size:0.9rem;">No summaries saved yet.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: AI Score & Recommendations & Quick Chat (Span 4) -->
+          <div class="span-4" style="display:flex; flex-direction:column; gap:1.5rem;">
+            
+            <!-- Productivity Score -->
+            <div class="dash-card score-widget">
+              <div class="dash-card-header" style="width:100%; margin-bottom:0.5rem;">
+                <h3>🔥 Productivity Score</h3>
+              </div>
+              <div class="score-circle-wrapper">
+                <svg class="score-circle" viewBox="0 0 160 160">
+                  <circle class="score-circle-bg" cx="80" cy="80" r="70"></circle>
+                  <circle class="score-circle-val" id="score-ring" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="score-number" id="score-value">0</div>
+              </div>
+              <p id="burnout-level-label" style="font-weight:600; font-size:0.95rem; text-transform:capitalize;">Burnout Risk: Low</p>
+            </div>
+
+            <!-- AI Recommendations Panel -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>💡 AI Coach advice</h3>
+              </div>
+              <div class="rec-panel" id="recommendations-container">
+                <div style="display:flex; justify-content:center; align-items:center; height:100px;">
+                  <div class="spinner"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Chatbot Trigger Card -->
+            <div class="dash-card" style="background: linear-gradient(135deg, var(--accent-light) 0%, var(--card-bg) 100%);">
+              <div class="dash-card-header" style="border-bottom:none; margin-bottom:0.5rem;">
+                <h3>💬 Ask Study Coach</h3>
+              </div>
+              <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1rem;">Stuck on an assignment? Ask OrbitMind Coach for instant study steps.</p>
+              <a href="chatbot.html" class="btn btn-primary" style="font-size:0.85rem; padding:0.6rem 1rem;">Start Chatting</a>
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

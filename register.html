@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — OrbitMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-container">
+      <div class="auth-header">
+        <a href="index.html" class="auth-logo" style="text-decoration:none;"><span>🧠</span> OrbitMind AI</a>
+        <h2 style="margin-top: 1rem;">Create Account</h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">Start studying smarter today</p>
+      </div>
+
+      <div id="error-alert" style="display:none; background-color:rgba(235,87,87,0.1); color:var(--danger); padding:0.75rem; border-radius:8px; border:1px solid var(--danger); font-size:0.85rem; margin-bottom:1.5rem; text-align:center;"></div>
+
+      <form class="auth-form" id="register-form">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" class="input-field" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="input-field" placeholder="john.doe@university.edu" required>
+        </div>
+        <div class="form-group">
+          <label for="university">University</label>
+          <input type="text" id="university" class="input-field" placeholder="State University" required>
+        </div>
+        <div class="form-group">
+          <label for="department">Department / Major</label>
+          <input type="text" id="department" class="input-field" placeholder="Computer Science" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="input-field" placeholder="Min. 6 characters" required>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="input-field" placeholder="Re-type password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Sign Up</button>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

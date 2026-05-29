@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Study Planner — OrbitMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Custom Print CSS specifically for Study Plans */
+    @media print {
+      body {
+        background-color: white !important;
+        color: black !important;
+      }
+      .app-sidebar, .app-header, .studyplan-form-card, .saved-plans-panel, .studyplan-action-bar {
+        display: none !important;
+      }
+      .app-container {
+        margin-left: 0 !important;
+      }
+      .app-content {
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .study-planner-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .week-roadmap-card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+      }
+      .week-roadmap-body.collapsed {
+        display: block !important; /* Always show body on print */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+      <!-- Header Container -->
+      <div id="header-container"></div>
+
+      <!-- Content Area -->
+      <main class="app-content">
+        
+        <div class="study-planner-grid">
+          
+          <!-- LEFT COLUMN: Study Plan Input Details -->
+          <div>
+            <div class="studyplan-form-card">
+              <h3>📅 Plan New Study Cycle</h3>
+              
+              <form id="studyplan-form">
+                <div class="form-group">
+                  <label for="plan-subject">Subject / Course Name *</label>
+                  <input type="text" id="plan-subject" class="input-field" placeholder="Computer Science 101" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="plan-topics">Topics to Cover * (Comma separated)</label>
+                  <textarea id="plan-topics" class="input-field" style="height:60px; resize:none;" placeholder="Boolean Algebra, Logic Gates, Multiplexers, Karnaugh Maps" required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="plan-difficulty">Subject Difficulty Level</label>
+                  <select id="plan-difficulty" class="input-field">
+                    <option value="easy">Easy — Quick review</option>
+                    <option value="medium" selected>Medium — Standard learning</option>
+                    <option value="hard">Hard — Detailed schedule</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="plan-exam-date">Exam / Target Date *</label>
+                  <input type="date" id="plan-exam-date" class="input-field" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="plan-hours">Daily Available Study Hours *</label>
+                  <input type="range" id="plan-hours" min="1" max="8" value="2" class="input-field" style="height:auto; padding:0.5rem 0;" oninput="this.nextElementSibling.value = this.value + ' hours/day'">
+                  <output style="font-size:0.85rem; font-weight:600; color:var(--text-secondary); margin-top:0.25rem; display:block;">2 hours/day</output>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="generate-plan-btn" style="margin-top:1rem;">
+                  ⚡ Generate AI Study Plan
+                </button>
+              </form>
+            </div>
+
+            <!-- Saved Plans Drawer -->
+            <div class="saved-plans-panel">
+              <h3 style="font-size:1.1rem;">📂 Saved Roadmaps</h3>
+              <div class="saved-plans-list" id="saved-plans-container">
+                <div style="text-align:center; padding:1.5rem; color:var(--text-secondary); font-size:0.85rem;">No saved plan roadmaps.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: AI Study Planner Output -->
+          <div class="studyplan-schedule-panel" style="position:relative; min-height:400px;">
+            
+            <!-- Loading overlay -->
+            <div id="studyplan-loading-overlay" class="full-loading-overlay" style="display:none;">
+              <div style="text-align:center;">
+                <div class="spinner"></div>
+                <p style="margin-top:0.5rem; font-weight:500;">AI is calculating study distribution...</p>
+              </div>
+            </div>
+
+            <!-- Schedule Output Container -->
+            <div id="studyplan-output">
+              <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:350px; background-color:var(--card-bg); border:1px solid var(--border); border-radius:16px; text-align:center; padding:2rem; box-shadow:var(--shadow);">
+                <span style="font-size:3rem; margin-bottom:1rem;">📅</span>
+                <h4>No Study Roadmap Active</h4>
+                <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.25rem; max-width:400px;">Enter subject parameters in the form to generate a dynamic week-by-week timeline schedule.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/studyplan.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager — OrbitMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+      <!-- Header Container -->
+      <div id="header-container"></div>
+
+      <!-- Content Area -->
+      <main class="app-content">
+        
+        <!-- Header row of Task Board -->
+        <div class="task-manager-header">
+          <div>
+            <h1 style="font-size:1.8rem; margin-bottom:0.25rem;">Academic Task Board</h1>
+            <p style="color:var(--text-secondary); font-size:0.9rem;">Organize assignments, study times, exams, and personal events</p>
+          </div>
+          <button class="btn btn-primary" id="open-task-modal-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add New Task
+          </button>
+        </div>
+
+        <!-- Tabs for Daily/Weekly/Monthly -->
+        <div class="view-tabs" id="view-tabs">
+          <button class="view-tab-btn active" data-view="all">All Tasks</button>
+          <button class="view-tab-btn" data-view="daily">Today's Tasks</button>
+          <button class="view-tab-btn" data-view="weekly">This Week</button>
+          <button class="view-tab-btn" data-view="monthly">This Month</button>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="task-filters-bar">
+          
+          <!-- Category Filter -->
+          <select id="filter-category" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="study">Study</option>
+            <option value="assignment">Assignment</option>
+            <option value="exam">Exam</option>
+            <option value="personal">Personal</option>
+            <option value="project">Project</option>
+          </select>
+
+          <!-- Priority Filter -->
+          <select id="filter-priority" class="filter-select">
+            <option value="">All Priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+
+          <!-- Sort Selector -->
+          <select id="filter-sort" class="filter-select">
+            <option value="deadline:asc">Deadline: Soonest</option>
+            <option value="deadline:desc">Deadline: Latest</option>
+            <option value="priority:desc">Priority: High to Low</option>
+            <option value="estimatedHours:desc">Hours: High to Low</option>
+          </select>
+
+          <!-- Search Bar -->
+          <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" id="search-tasks" class="input-field" placeholder="Search tasks...">
+          </div>
+
+        </div>
+
+        <!-- Loading spinner placeholder -->
+        <div id="tasks-loading-spinner" style="display:none; text-align:center; padding:3rem;">
+          <div class="spinner"></div>
+          <p style="margin-top:0.5rem; color:var(--text-secondary);">Loading your planner board...</p>
+        </div>
+
+        <!-- Task Grid Container -->
+        <div class="tasks-grid" id="tasks-grid">
+          <!-- Tasks will render here -->
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- TASK MODAL POPUP FORM -->
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-title">Create New Task</h3>
+        <button class="modal-close-btn" id="close-task-modal-btn">&times;</button>
+      </div>
+      <form id="task-form">
+        <!-- Hidden input for task editing -->
+        <input type="hidden" id="task-id">
+
+        <div class="modal-body">
+          <div id="modal-error" style="display:none; background-color:rgba(235,87,87,0.1); color:var(--danger); padding:0.5rem; border-radius:6px; font-size:0.8rem; margin-bottom:1rem; text-align:center;"></div>
+          
+          <div class="form-group">
+            <label for="task-title">Task Title *</label>
+            <input type="text" id="task-title" class="input-field" placeholder="Review CS Chapter 3" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="task-desc">Description</label>
+            <textarea id="task-desc" class="input-field" style="height:80px; resize:none;" placeholder="Take notes, complete end of chapter quiz"></textarea>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="task-deadline">Deadline *</label>
+              <input type="datetime-local" id="task-deadline" class="input-field" required>
+            </div>
+            <div class="form-group">
+              <label for="task-hours">Estimated Hours</label>
+              <input type="number" id="task-hours" class="input-field" min="0" step="0.5" value="1">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="task-category">Category *</label>
+              <select id="task-category" class="input-field" required>
+                <option value="study">Study</option>
+                <option value="assignment">Assignment</option>
+                <option value="exam">Exam</option>
+                <option value="personal">Personal</option>
+                <option value="project">Project</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="task-priority">Priority</label>
+              <select id="task-priority" class="input-field">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancel-task-modal-btn" style="width:auto; padding:0.6rem 1.25rem;">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="width:auto; padding:0.6rem 1.25rem;">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/tasks.js"></script>
+</body>
+</html>
